@@ -5,10 +5,9 @@ function InitDashboard() {
     console.log("InitDashboard()");
 
     // Populate the dropdown (selector) in Test Subject ID No.:
-
     var selector = d3.select("#selDataset");
 
-    d3.json("samples.json").then(function(data) {
+    d3.json("data/samples.json").then(function(data) {
         console.log(data);       
 
     });
