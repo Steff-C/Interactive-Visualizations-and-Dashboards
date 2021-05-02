@@ -30,7 +30,7 @@ function DrawBargraph(sampleId) {
         
         var barLayout = {
             title: "Top 10 Bacteria Cultures Found",
-            margin: {t: 30, l: 150}
+            margin: {t: 25, l: 150}
         }
         
         Plotly.newPlot("bar", barArray, barLayout);
@@ -44,11 +44,53 @@ function DrawBargraph(sampleId) {
 
 function DrawBubblechart(sampleId) {
     console.log(`DrawBubblechart(${sampleId})`);
-} 
+
+    d3.json("data/samples.json").then(data => {
+        console.log(data);  
+        
+        var samples = data.samples;
+        var resultArray = samples.filter(s => s.id == sampleId);
+        console.log(resultArray);
+        var result = resultArray[0];
+        console.log(result)
+        var otu_ids = result.otu_ids;
+        var otu_labels = result.otu_labels;
+        var sample_values = result.sample_values;
+        
+        var xvalues = data.otu_ids;
+        var yvalues = data.sample_values;
+        var label = data.otu_labels;
+        var size = data.sample_values;
+
+        var bubbles = {
+            x: otu_ids,
+            y: sample_values,
+            label: otu_labels,
+            mode: 'markers',
+            marker: {
+                size: sample_values,
+                color: otu_ids
+            }
+        };
+        var data =[bubbles];
+
+        var layout = {
+            title: "Bacteria Size",
+            showlegend: false,
+            height: 600,
+        }
+
+        Plotly.newPlot("bubble", data,layout);
+    });
+}    
 
 function ShowMetadata(sampleId) {
     console.log(`ShowMetadata(${sampleId})`);
-} 
+    // d3.json("data/samples.json").then(data => {
+     
+}
+
+
 
 function optionChanged(newSampleId) {
     console.log(`User selected(${newSampleId})`);
