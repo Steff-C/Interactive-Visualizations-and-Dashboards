@@ -91,11 +91,15 @@ function ShowMetadata(sampleId) {
     console.log(`ShowMetadata(${sampleId})`);
     
     d3.json(`metadata/samples.json`).then(data => {
-    var PANEL = d3.select("#sample-metadata");
-    PANEL.html("");
-    Object.entries(data).forEach(([key, value]) => {
-        PANEL.append("h6").text(`${key}:${value}`);
-    })
+        var sampleMetadata = data.metadata;
+        var result = sampleMetadata.filter(obj => obj.id == sampleId);
+        var filterresult = result[0];
+        var display = d3.select("#sample-metadata");
+        display.html("");
+        Object.entries(filterresult).forEach(([key, value]) => {
+            display.append("h6").text(`${key} ${value}`);
+        });
+
     });
 }
 function optionChanged(newSampleId) {
