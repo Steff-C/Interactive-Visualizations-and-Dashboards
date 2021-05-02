@@ -4,7 +4,7 @@ console.log("app.js is loaded");
 function DrawBargraph(sampleId) {
     console.log(`DrawBargraph(${sampleId})`);
 
-    d3.json("data/samples.json").then(data => {
+    d3.json(`data/samples.json`).then(data => {
         console.log(data);  
 
         var samples = data.samples;
@@ -23,14 +23,17 @@ function DrawBargraph(sampleId) {
             y: yticks,
             type: "bar",
             text: otu_labels.slice(0, 10).reverse(), //TBD
-            orientation: "h"
+            textposition: 'auto',
+            orientation: "h",
+            width: 'auto'
         }
 
         var barArray = [barData];
         
         var barLayout = {
             title: "Top 10 Bacteria Cultures Found",
-            margin: {t: 25, l: 150}
+            margin: {t: 25, l: 200},
+            size:22
         }
         
         Plotly.newPlot("bar", barArray, barLayout);
@@ -45,7 +48,7 @@ function DrawBargraph(sampleId) {
 function DrawBubblechart(sampleId) {
     console.log(`DrawBubblechart(${sampleId})`);
 
-    d3.json("data/samples.json").then(data => {
+    d3.json(`data/samples.json`).then(data => {
         console.log(data);  
         
         var samples = data.samples;
@@ -86,12 +89,15 @@ function DrawBubblechart(sampleId) {
 
 function ShowMetadata(sampleId) {
     console.log(`ShowMetadata(${sampleId})`);
-    // d3.json("data/samples.json").then(data => {
-     
+    
+    d3.json(`metadata/samples.json`).then(data => {
+    var PANEL = d3.select("#sample-metadata");
+    PANEL.html("");
+    Object.entries(data).forEach(([key, value]) => {
+        PANEL.append("h6").text(`${key}:${value}`);
+    })
+    });
 }
-
-
-
 function optionChanged(newSampleId) {
     console.log(`User selected(${newSampleId})`);
 
