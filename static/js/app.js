@@ -102,6 +102,7 @@ function ShowMetadata(sampleId) {
 
     });
 }
+
 function optionChanged(newSampleId) {
     console.log(`User selected(${newSampleId})`);
 
